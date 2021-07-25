@@ -3,9 +3,11 @@ function Start-RatesWatcherJob{
         param(
             [string] $path
         )
-        Import-Module D:\Workspace\Projects\CurrencyWatcher\CurrencyWatcher.psm1
+        Import-Module "$path\..\CurrencyWatcher.psm1"
         while($true){
-            Get-Rates
+            $rate = Get-Rates
+            $rate.Differential = Measure-D
+            # Save-Rates $rats
             Start-Sleep 60
         }
     } -ArgumentList $PSScriptRoot

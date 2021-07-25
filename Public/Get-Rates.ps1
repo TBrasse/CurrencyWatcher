@@ -1,10 +1,11 @@
 function Get-Rates{
-    $currencyCode = "USDPLN"
-    $rates = Invoke-RateRequest -CurrencyCode $currencyCode
-    $param = @{
-        "CurrencyCode" = $currencyCode
-        "Rate" = $rates."$currencyCode".rate 
-        "Timestamp" =  Get-Date -UnixTimeSeconds $rates."$currencyCode".timestamp
+    param(
+        [string] $CurrencyCode
+    )
+    $rates = Invoke-RateRequest -CurrencyCode $CurrencyCode
+    @{
+        "CurrencyCode" = $CurrencyCode
+        "Rate" = $rates."$CurrencyCode".rate 
+        "Timestamp" =  (Get-Date -UnixTimeSeconds ($rates."$CurrencyCode".timestamp)).ToString()
     }
-    Save-Rate @param
 }
